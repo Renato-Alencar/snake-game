@@ -8,6 +8,7 @@ snake[0] = {
 };
 let direction = "right";
 let start = setInterval(startGame, 100);
+let controls = document.addEventListener("keydown", gameControls);
 
 function createBG() {
   context.fillStyle = "burlywood";
@@ -21,7 +22,14 @@ function createSnake() {
   });
 }
 
-function gameControls() {
+function gameControls(event) {
+  if (event.key == "a" && direction != "right") direction = "left";
+  if (event.key == "d" && direction != "left") direction = "right";
+  if (event.key == "w" && direction != "down") direction = "up";
+  if (event.key == "s" && direction != "up") direction = "down";
+}
+
+function snakeMove() {
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
 
@@ -32,16 +40,23 @@ function gameControls() {
 
   snake.pop();
 
-  let snakeMove = {
+  let move = {
     x: snakeX,
     y: snakeY,
   };
-  snake.unshift(snakeMove);
+  snake.unshift(move);
+}
+
+function comebackScreen() {
+  if (snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
+  if (snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
+  if (snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
+  if (snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
 }
 
 function startGame() {
+  comebackScreen();
   createBG();
   createSnake();
-
-  gameControls();
+  snakeMove();
 }
