@@ -6,6 +6,8 @@ snake[0] = {
   x: 8 * box,
   y: 8 * box,
 };
+let direction = "right";
+let start = setInterval(startGame, 100);
 
 function createBG() {
   context.fillStyle = "burlywood";
@@ -19,5 +21,27 @@ function createSnake() {
   });
 }
 
-createBG();
-createSnake();
+function gameControls() {
+  let snakeX = snake[0].x;
+  let snakeY = snake[0].y;
+
+  if (direction === "right") snakeX += box;
+  else if (direction === "left") snakeX -= box;
+  else if (direction === "up") snakeY -= box;
+  else if (direction === "down") snakeY += box;
+
+  snake.pop();
+
+  let snakeMove = {
+    x: snakeX,
+    y: snakeY,
+  };
+  snake.unshift(snakeMove);
+}
+
+function startGame() {
+  createBG();
+  createSnake();
+
+  gameControls();
+}
