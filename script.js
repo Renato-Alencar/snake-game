@@ -34,21 +34,31 @@ function gameControls(event) {
   if (event.key == "s" && direction != "up") direction = "down";
 }
 
+function eatFood(posX, posY) {
+  if (posX != food[0].x || posY != food[0].y) {
+    snake.pop();
+  } else {
+    food[0].x = Math.floor(Math.random() * 15 + 1) * box;
+    food[0].y = Math.floor(Math.random() * 15 + 1) * box;
+  }
+}
+
 function snakeMove() {
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
 
   if (direction === "right") snakeX += box;
-  else if (direction === "left") snakeX -= box;
-  else if (direction === "up") snakeY -= box;
-  else if (direction === "down") snakeY += box;
+  if (direction === "left") snakeX -= box;
+  if (direction === "up") snakeY -= box;
+  if (direction === "down") snakeY += box;
 
-  snake.pop();
+  eatFood(snakeX, snakeY);
 
   let move = {
     x: snakeX,
     y: snakeY,
   };
+
   snake.unshift(move);
 }
 
