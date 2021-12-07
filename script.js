@@ -6,6 +6,11 @@ snake[0] = {
   x: 8 * box,
   y: 8 * box,
 };
+let food = [];
+food[0] = {
+  x: Math.floor(Math.random() * 15 + 1) * box,
+  y: Math.floor(Math.random() * 15 + 1) * box,
+};
 let direction = "right";
 let start = setInterval(startGame, 100);
 let controls = document.addEventListener("keydown", gameControls);
@@ -15,9 +20,9 @@ function createBG() {
   context.fillRect(0, 0, 16 * box, 16 * box);
 }
 
-function createSnake() {
-  snake.forEach((position) => {
-    context.fillStyle = "green";
+function createElement(element, color) {
+  element.forEach((position) => {
+    context.fillStyle = color;
     context.fillRect(position.x, position.y, box, box);
   });
 }
@@ -57,6 +62,7 @@ function comebackScreen() {
 function startGame() {
   comebackScreen();
   createBG();
-  createSnake();
+  createElement(snake, "green");
+  createElement(food, "red");
   snakeMove();
 }
