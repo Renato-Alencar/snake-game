@@ -43,14 +43,11 @@ function eatFood(posX, posY) {
   }
 }
 
-function snakeMove() {
-  let snakeX = snake[0].x;
-  let snakeY = snake[0].y;
-
-  if (direction === "right") snakeX += box;
-  if (direction === "left") snakeX -= box;
-  if (direction === "up") snakeY -= box;
-  if (direction === "down") snakeY += box;
+function snakeMove(snakeX, snakeY) {
+  if (direction == "right") snakeX += box;
+  if (direction == "left") snakeX -= box;
+  if (direction == "up") snakeY -= box;
+  if (direction == "down") snakeY += box;
 
   eatFood(snakeX, snakeY);
 
@@ -62,11 +59,26 @@ function snakeMove() {
   snake.unshift(move);
 }
 
+function gameOver(posX, posY) {
+  for (let i = 1; i < snake.length; i++) {
+    if (posX == snake[i].x && posY == snake[i].y) {
+      clearInterval(start);
+      alert("GAME OVER!");
+    }
+  }
+}
+
 function comebackScreen() {
-  if (snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
-  if (snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
-  if (snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
-  if (snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
+  let snakeX = snake[0].x;
+  let snakeY = snake[0].y;
+
+  if (snakeX >= 15 * box && direction == "right") snakeX = 0;
+  if (snakeX < 0 && direction == "left") snakeX = 16 * box;
+  if (snakeY >= 15 * box && direction == "down") snakeY = 0;
+  if (snakeY < 0 && direction == "up") snakeY = 16 * box;
+
+  gameOver(snakeX, snakeY);
+  snakeMove(snakeX, snakeY);
 }
 
 function startGame() {
@@ -74,5 +86,4 @@ function startGame() {
   createBG();
   createElement(snake, "green");
   createElement(food, "red");
-  snakeMove();
 }
