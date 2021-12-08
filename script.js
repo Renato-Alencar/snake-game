@@ -72,9 +72,9 @@ function comebackScreen() {
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
 
-  if (snakeX >= 15 * box && direction == "right") snakeX = 0;
+  if (snakeX > 15 * box && direction == "right") snakeX = 0;
   if (snakeX < 0 && direction == "left") snakeX = 16 * box;
-  if (snakeY >= 15 * box && direction == "down") snakeY = 0;
+  if (snakeY > 15 * box && direction == "down") snakeY = 0;
   if (snakeY < 0 && direction == "up") snakeY = 16 * box;
 
   gameOver(snakeX, snakeY);
@@ -82,8 +82,8 @@ function comebackScreen() {
 }
 
 function startGame() {
-  comebackScreen();
   createBG();
   createElement(snake, "green");
   createElement(food, "red");
+  comebackScreen();
 }
